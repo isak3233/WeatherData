@@ -16,11 +16,23 @@ namespace WeatherData
             insideList.Add("2. Sortering av varmast till kallaste dagen enligt medeltemperatur per dag");
             insideList.Add("3. Sortering av torrast till fuktigaste dagen enligt medelluftfuktighet per dag");
             insideList.Add("4. Sortering av minst till störst risk av mögel");
-
+            insideList.Add("5. Gå tillbaka till huvudmenyn");
 
             var window = new Window("Inomhus", 0, 0, insideList);
             window.Draw();
-            Console.ReadLine();
+
+
+            int option = InputHelper.GetIntFromUser("Val: ");
+            Console.Clear();
+            switch (option)
+            {
+                
+                case 5:
+                    StartMainMenu();
+                    break;
+                default:
+                    break;
+            }
         }
         static public void StartOutsideMenu()
         {
@@ -29,11 +41,22 @@ namespace WeatherData
             outsideList.Add("2. Sortering av varmast till kallaste dagen enligt medeltemperatur per dag");
             outsideList.Add("3. Sortering av torrast till fuktigaste dagen enligt medelluftfuktighet per dag");
             outsideList.Add("4. Sortering av minst till störst risk av mögel");
+            outsideList.Add("5. Gå tillbaka till huvudmenyn");
 
 
             var window = new Window("Utomhus", 0, 0, outsideList);
             window.Draw();
-            Console.ReadLine();
+            int option = InputHelper.GetIntFromUser("Val: ");
+            Console.Clear();
+            switch (option)
+            {
+                case 5:
+                    StartMainMenu();
+                    break;
+                default:
+                    break;
+            }
+
         }
         static public void StartMainMenu()
         {
@@ -53,6 +76,9 @@ namespace WeatherData
                 case 2:
                     StartOutsideMenu();
                     break;
+                //case 3:
+                //    Console.WriteLine(InputHelper.GetDateFromUser(6, 12));
+                //    break;
                 default:
                     break;
             }
