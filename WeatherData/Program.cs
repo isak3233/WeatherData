@@ -6,7 +6,12 @@ namespace WeatherData
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Yo"); //
+            while (true)
+            {
+                UiManager.StartMainMenu();
+                Console.ReadLine();
+            }
+            
         }
     }
 }
