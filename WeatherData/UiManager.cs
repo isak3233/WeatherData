@@ -11,6 +11,7 @@ namespace WeatherData
     {
         static public void ViewInsideMenu()
         {
+            Console.Clear();
             List<string> insideList = new List<string>();
             insideList.Add("1. Medeltemperatur för valt datum");
             insideList.Add("2. Sortering av varmast till kallaste dagen enligt medeltemperatur per dag");
@@ -23,10 +24,16 @@ namespace WeatherData
 
 
             int option = InputHelper.GetIntFromUser("Val: ");
-            Console.Clear();
             switch (option)
             {
-                
+                case 1:
+                    var selectedDateForAverage = InputHelper.GetDateFromUser(6, 12);
+                    WeatherService.ShowAverageTempForDay(selectedDateForAverage);
+                    break;
+                case 2:
+                    int selectedMonth = InputHelper.GetMonthFromUser(6, 12);
+                    WeatherService.ShowHotColdRanking(selectedMonth);
+                    break;
                 case 5:
                     ViewMainMenu();
                     break;
@@ -36,21 +43,30 @@ namespace WeatherData
         }
         static public void ViewOutsideMenu()
         {
+            Console.Clear();
             List<string> outsideList = new List<string>();
-            outsideList.Add("1. Medeltemperatur för valt datum");
+            outsideList.Add("1. Medeltemperatur och luftfuktighet per dag, för valt datum");
             outsideList.Add("2. Sortering av varmast till kallaste dagen enligt medeltemperatur per dag");
             outsideList.Add("3. Sortering av torrast till fuktigaste dagen enligt medelluftfuktighet per dag");
             outsideList.Add("4. Sortering av minst till störst risk av mögel");
-            outsideList.Add("5. Gå tillbaka till huvudmenyn");
+            outsideList.Add("5. Datum för meteorologisk Höst");
+            outsideList.Add("6. Datum för meteologisk Vinter");
+
+            outsideList.Add("7. Gå tillbaka till huvudmenyn");
 
 
             var window = new Window("Utomhus", 0, 0, outsideList);
             window.Draw();
             int option = InputHelper.GetIntFromUser("Val: ");
-            Console.Clear();
             switch (option)
             {
-                case 5:
+                case 1:
+                    var selectedDate = InputHelper.GetDateFromUser(6, 12);
+                    var weatherData = WeatherDataCollection.GetWeatherDataForDay(selectedDate, false);
+                    var averageTemp = WeatherDataCalculation.AverageTemp(weatherData);
+                    Console.WriteLine($"Medeltemperaturen den {selectedDate.ToString("yyyy-MM-dd")} var {averageTemp} °C");
+                    break;
+                case 7:
                     ViewMainMenu();
                     break;
                 default:
@@ -60,6 +76,7 @@ namespace WeatherData
         }
         static public void ViewMainMenu()
         {
+            Console.Clear();
             List<string> mainMenuList = new List<string>();
             mainMenuList.Add("1. Inomhus");
             mainMenuList.Add("2. Utomhus");
@@ -67,7 +84,7 @@ namespace WeatherData
             window.Draw();
 
             int option = InputHelper.GetIntFromUser("Val: ");
-            Console.Clear();
+
             switch(option)
             {
                 case 1:
@@ -76,13 +93,14 @@ namespace WeatherData
                 case 2:
                     ViewOutsideMenu();
                     break;
-                //case 3:
-                //    Console.WriteLine(InputHelper.GetDateFromUser(6, 12));
-                //    break;
+                case 3:
+                    Console.WriteLine(InputHelper.GetDateFromUser(6, 12));
+                    break;
                 default:
                     break;
             }
             
         }
+
     }
 }
