@@ -9,7 +9,7 @@ namespace WeatherData
 {
     internal class UiManager
     {
-        static public void StartInsideMenu()
+        static public void ViewInsideMenu()
         {
             List<string> insideList = new List<string>();
             insideList.Add("1. Medeltemperatur för valt datum");
@@ -28,13 +28,13 @@ namespace WeatherData
             {
                 
                 case 5:
-                    StartMainMenu();
+                    ViewMainMenu();
                     break;
                 default:
                     break;
             }
         }
-        static public void StartOutsideMenu()
+        static public void ViewOutsideMenu()
         {
             List<string> outsideList = new List<string>();
             outsideList.Add("1. Medeltemperatur för valt datum");
@@ -51,14 +51,14 @@ namespace WeatherData
             switch (option)
             {
                 case 5:
-                    StartMainMenu();
+                    ViewMainMenu();
                     break;
                 default:
                     break;
             }
 
         }
-        static public void StartMainMenu()
+        static public void ViewMainMenu()
         {
             List<string> mainMenuList = new List<string>();
             mainMenuList.Add("1. Inomhus");
@@ -71,10 +71,10 @@ namespace WeatherData
             switch(option)
             {
                 case 1:
-                    StartInsideMenu();
+                    ViewInsideMenu();
                     break;
                 case 2:
-                    StartOutsideMenu();
+                    ViewOutsideMenu();
                     break;
                 //case 3:
                 //    Console.WriteLine(InputHelper.GetDateFromUser(6, 12));
