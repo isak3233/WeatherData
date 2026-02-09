@@ -8,9 +8,9 @@ namespace WeatherData
 {
     internal class WeatherService
     {
-        public static void ShowAverageTempForDay(DateTime date)
+        public static void ShowAverageTempForDay(DateTime date, bool inhouse)
         {
-            var weatherData = WeatherDataCollection.GetWeatherDataForDay(date, true);
+            var weatherData = WeatherDataCollection.GetWeatherDataForDay(date, inhouse);
             var averageTemp = WeatherDataCalculation.AverageTemp(weatherData);
             Console.WriteLine($"Medeltemperaturen den {date:yyyy-MM-dd} var {averageTemp:F2} °C");
         }

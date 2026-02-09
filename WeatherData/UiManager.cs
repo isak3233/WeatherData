@@ -28,7 +28,7 @@ namespace WeatherData
             {
                 case 1:
                     var selectedDateForAverage = InputHelper.GetDateFromUser(6, 12);
-                    WeatherService.ShowAverageTempForDay(selectedDateForAverage);
+                    WeatherService.ShowAverageTempForDay(selectedDateForAverage, true);
                     break;
                 case 2:
                     int selectedMonth = InputHelper.GetMonthFromUser(6, 12);
@@ -61,10 +61,8 @@ namespace WeatherData
             switch (option)
             {
                 case 1:
-                    var selectedDate = InputHelper.GetDateFromUser(6, 12);
-                    var weatherData = WeatherDataCollection.GetWeatherDataForDay(selectedDate, false);
-                    var averageTemp = WeatherDataCalculation.AverageTemp(weatherData);
-                    Console.WriteLine($"Medeltemperaturen den {selectedDate.ToString("yyyy-MM-dd")} var {averageTemp} °C");
+                    var selectedDateForAverage = InputHelper.GetDateFromUser(6, 12);
+                    WeatherService.ShowAverageTempForDay(selectedDateForAverage, false);
                     break;
                 case 7:
                     ViewMainMenu();
