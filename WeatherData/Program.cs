@@ -8,7 +8,7 @@ namespace WeatherData
         {
             while (true)
             {
-                UiManager.ViewMainMenu();
+                UiManager.StartMainMenu();
                 Console.ReadLine();
             }
             

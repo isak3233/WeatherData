@@ -37,19 +37,19 @@ namespace WeatherData
         }
         static public int[] GetExistingDaysInMonth(DateTime date)
         {
-            string month = date.ToString("MM");
-            string rule = $@".*-{month}-.*";
+            string rule = $@"^\d{{4}}-{date:MM}-(\d{{2}})";
             Regex regex = new Regex(rule);
 
             string[] weatherData = File.ReadAllLines("../../../data/WeatherData.txt");
-            //Plockar ut unika dagar i månaden
+
             var result = weatherData
-                .Where(d => regex.IsMatch(d))
-                .Select(d => int.Parse(d.Substring(8, 2)))
+                .Select(d => regex.Match(d))
+                .Where(m => m.Success)
+                .Select(m => int.Parse(m.Groups[1].Value)) 
                 .Distinct()
                 .ToArray();
-   
-            
+
+
             return result;
         }
     }

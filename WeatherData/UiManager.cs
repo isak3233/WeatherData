@@ -9,7 +9,7 @@ namespace WeatherData
 {
     internal class UiManager
     {
-        static public void ViewInsideMenu()
+        static public void StartInsideMenu()
         {
             Console.Clear();
             List<string> insideList = new List<string>();
@@ -35,13 +35,13 @@ namespace WeatherData
                     WeatherService.ShowHotColdRanking(selectedMonth);
                     break;
                 case 5:
-                    ViewMainMenu();
+                    StartMainMenu();
                     break;
                 default:
                     break;
             }
         }
-        static public void ViewOutsideMenu()
+        static public void StartOutsideMenu()
         {
             Console.Clear();
             List<string> outsideList = new List<string>();
@@ -65,14 +65,14 @@ namespace WeatherData
                     WeatherService.ShowAverageTempForDay(selectedDateForAverage, false);
                     break;
                 case 7:
-                    ViewMainMenu();
+                    StartMainMenu();
                     break;
                 default:
                     break;
             }
 
         }
-        static public void ViewMainMenu()
+        static public void StartMainMenu()
         {
             Console.Clear();
             List<string> mainMenuList = new List<string>();
@@ -86,10 +86,10 @@ namespace WeatherData
             switch(option)
             {
                 case 1:
-                    ViewInsideMenu();
+                    StartInsideMenu();
                     break;
                 case 2:
-                    ViewOutsideMenu();
+                    StartOutsideMenu();
                     break;
                 case 3:
                     Console.WriteLine(InputHelper.GetDateFromUser(6, 12));
