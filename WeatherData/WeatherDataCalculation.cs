@@ -66,21 +66,28 @@ namespace WeatherData
                 decimal raw = h - (100 - t);
                 decimal moldRisk;
 
-                if (raw <= -50m)
-                    moldRisk = 0m;
-                else if (raw <= 0m)
-                    moldRisk = (raw + 50m) / 50m * 20m;
-                else if (raw >= 30m)
-                    moldRisk = 100m;
+                if (raw <= -50)
+                {
+                    moldRisk = 0;
+                }
+                else if (raw <= 0)
+                {
+                    moldRisk = (raw + 50) / 50 * 20;
+                }
+                else if (raw >= 30)
+                {
+                    moldRisk = 100;
+                }
                 else
-                    moldRisk = 20m + (raw / 30m) * 80m;
+                {
+                    moldRisk = 20 + (raw / 30) * 80;
+                }
+                    
 
                 sum += moldRisk;
             }
 
-            return tempNHumiditys.Length == 0
-                ? 0
-                : Math.Round(sum / tempNHumiditys.Length, 2);
+            return tempNHumiditys.Length == 0 ? 0 : Math.Round(sum / tempNHumiditys.Length, 2);
         }
         static public List<(DateTime startMolding, DateTime endMolding)> RiskForMoldOverDays(List<(DateTime date, decimal mold)> moldAverage)
         {
@@ -102,6 +109,12 @@ namespace WeatherData
                     
                     endOfRiskDate = date;
                 } else if(startOfRiskDate.Year != 1)
+                {
+                    returnList.Add((startOfRiskDate, endOfRiskDate));
+                    startOfRiskDate = new DateTime();
+                }
+
+                if(i + 1 >= moldAverage.Count && startOfRiskDate.Year != 1)
                 {
                     returnList.Add((startOfRiskDate, endOfRiskDate));
                     startOfRiskDate = new DateTime();

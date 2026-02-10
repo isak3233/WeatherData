@@ -90,10 +90,19 @@ namespace WeatherData
             
             foreach (var (startMoldingDate, endMoldingDate) in riskForMoldOverDays)
             {
-                if(endMoldingDate.Day - startMoldingDate.Day >= 2)
+                if(endMoldingDate.Day - startMoldingDate.Day >= 14)
                 {
-                    Console.WriteLine($"Finns risk för att mögel ska börja växa denna månaden mellan dagarna: {startMoldingDate.ToString("yyyy-MM-dd")} och {endMoldingDate.ToString("yyyy-MM-dd")}");
+                    Console.WriteLine($"Finns stor risk att det finns mögel som växt mellan dagarna: {startMoldingDate.ToString("yyyy-MM-dd")} och {endMoldingDate.ToString("yyyy-MM-dd")}");
                 }
+                else if(endMoldingDate.Day - startMoldingDate.Day >= 7)
+                {
+                    Console.WriteLine($"Finns risk för mögel som har växt under dagarna: {startMoldingDate.ToString("yyyy-MM-dd")} och {endMoldingDate.ToString("yyyy-MM-dd")}");
+                }
+                else if (endMoldingDate.Day - startMoldingDate.Day >= 2)
+                {
+                    Console.WriteLine($"Finns risk för att mögel skulle kunna börja växa denna månaden mellan dagarna: {startMoldingDate.ToString("yyyy-MM-dd")} och {endMoldingDate.ToString("yyyy-MM-dd")}");
+                }
+                
             }
 
         }
