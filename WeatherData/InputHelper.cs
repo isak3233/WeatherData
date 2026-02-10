@@ -60,7 +60,7 @@ namespace WeatherData
 
             while(true)
             {
-                int[] days = WeatherDataCollection.GetExistingDaysInMonth(selectedDate);
+                var days = WeatherDataCollection.GetExistingDaysInMonth(selectedDate);
                 Console.WriteLine("Dagar att välja mellan:");
                 foreach (int day in days)
                 {

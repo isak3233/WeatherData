@@ -35,7 +35,7 @@ namespace WeatherData
 
             return result;
         }
-        static public int[] GetExistingDaysInMonth(DateTime date)
+        static public List<int> GetExistingDaysInMonth(DateTime date)
         {
             string rule = $@"^\d{{4}}-{date:MM}-(\d{{2}})";
             Regex regex = new Regex(rule);
@@ -47,7 +47,17 @@ namespace WeatherData
                 .Where(m => m.Success)
                 .Select(m => int.Parse(m.Groups[1].Value)) 
                 .Distinct()
-                .ToArray();
+                .ToList();
+            for(int i = 0; i < result.Count; i++)
+            {
+                int day = result[i];
+                if (day < 0 || day > DateTime.DaysInMonth(date.Year, date.Month))
+                {
+                    result.Remove(day);
+                    i--;
+                }
+            }
+            
 
 
             return result;
