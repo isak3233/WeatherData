@@ -114,5 +114,14 @@ namespace WeatherData
             }
 
         }
+        public static void ShowMetrologicalAutumn()
+        {
+            var weatherData = WeatherDataCollection.GetAllWeatherData(false);
+            var averageTemps = WeatherDataCalculation.AverageTempForDays(weatherData);
+            var metrologicalDates = WeatherDataCalculation.Metrologicalautumn(averageTemps);
+            string date1 = metrologicalDates[0].ToString("yyyy-MM-dd");
+            string date2 = metrologicalDates[1].ToString("yyyy-MM-dd");
+            Console.WriteLine($"Den metrologiska hösten startade efter datumna {date1} och {date2}");
+        }
     }
 }

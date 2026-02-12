@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlTypes;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WeatherData
 {
@@ -28,9 +30,32 @@ namespace WeatherData
             }
             return temps.Length == 0 ? 0 : Math.Round(sum / temps.Length, 2);
         }
+        static public List<(DateTime day, decimal averageTemp)> AverageTempForDays(string[] weatherData)
+        {
+            string rule = @"^(\d{4}-\d{2}-\d{2}).*?,([\d.]+),";
+            Regex regex = new Regex(rule);
+
+            var result = weatherData
+                .Select(line => regex.Match(line))
+                .Where(m => m.Success)
+                .Select(m => new
+                {
+                    Date = DateTime.Parse(m.Groups[1].Value),
+                    Temp = decimal.Parse(m.Groups[2].Value, CultureInfo.InvariantCulture)
+                })
+                .GroupBy(x => x.Date)
+                .Select(g => (
+                    day: g.Key,
+                    averageTemp: g.Average(x => x.Temp)
+                ))
+                .OrderBy(x => x.day)
+                .ToList();
+
+            return result;
+        }
         static public decimal AverageHumidity(string[] weatherData)
         {
-            
+
             Regex regex = new Regex(@"(\d{2}$)");
 
             var humidityProcents = weatherData
@@ -82,7 +107,7 @@ namespace WeatherData
                 {
                     moldRisk = 20 + (raw / 30) * 80;
                 }
-                    
+
 
                 sum += moldRisk;
             }
@@ -102,19 +127,20 @@ namespace WeatherData
 
                 if (mold > riskThreshold)
                 {
-                    if(startOfRiskDate.Year == 1)
+                    if (startOfRiskDate.Year == 1)
                     {
                         startOfRiskDate = date;
-                    } 
-                    
+                    }
+
                     endOfRiskDate = date;
-                } else if(startOfRiskDate.Year != 1)
+                }
+                else if (startOfRiskDate.Year != 1)
                 {
                     returnList.Add((startOfRiskDate, endOfRiskDate));
                     startOfRiskDate = new DateTime();
                 }
 
-                if(i + 1 >= moldAverage.Count && startOfRiskDate.Year != 1)
+                if (i + 1 >= moldAverage.Count && startOfRiskDate.Year != 1)
                 {
                     returnList.Add((startOfRiskDate, endOfRiskDate));
                     startOfRiskDate = new DateTime();
@@ -124,26 +150,53 @@ namespace WeatherData
             return returnList;
         }
 
-        public static void Metrologicalautumn(string[] weatherData)
+        public static DateTime[] Metrologicalautumn(List<(DateTime day, decimal averageTemp)> averageTempForDays)
         {
             Regex regex = new Regex(@"^(\d{4}-\d{2}-\d{2}).*?,([\d.]+),");
 
             //Tar ut tempraturen från våran data
-            var temps = weatherData
-                .Select(d => regex.Match(d))
-                .Where(m => m.Success)
-                .Select(m => (m.Groups[1].Value, m.Groups[2].Value))
-                .ToArray();
 
+            DateTime streakStart = DateTime.MinValue;
+            DateTime previousDate = DateTime.MinValue;
+            int daysInRow = 0;
 
+            foreach (var (date, temp) in averageTempForDays)
+            {
+                if (temp < 10)
+                {
+                    if (daysInRow == 0)
+                    {
+                        streakStart = date;
+                        daysInRow = 1;
+                    }
+                    else if (date == previousDate.AddDays(1))
+                    {
+                        daysInRow++;
+                    }
+                    else
+                    {
+                        streakStart = date;
+                        daysInRow = 1;
+                    }
 
-            //decimal sum = 0;
+                    if (daysInRow >= 5)
+                    {
+                        return new DateTime[]
+                        {
+                            streakStart,
+                            date
+                        };
+                    }
+                }
+                else
+                {
+                    daysInRow = 0;
+                }
 
-            //foreach (string temp in temps)
-            //{
-                
-            //}
+                previousDate = date;
+            }
 
+            return null;
         }
     }
 }

@@ -86,7 +86,7 @@ namespace WeatherData
                     WeatherService.ShowMoldRisk(selectedMonthForMold, false);
                     break;
                 case 5:
-
+                    WeatherService.ShowMetrologicalAutumn();
                     break;
 
                 case 6:

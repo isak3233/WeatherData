@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WeatherData
 {
@@ -59,6 +60,18 @@ namespace WeatherData
             }
             
 
+
+            return result;
+        }
+        static public string[] GetAllWeatherData(bool inhouse)
+        {
+            string place = inhouse ? "Inne" : "Ute";
+
+            string rule = $@".*{place}.*";
+            Regex regex = new Regex(rule);
+
+            string[] weatherData = File.ReadAllLines("../../../data/WeatherData.txt");
+            string[] result = weatherData.Where(d => regex.IsMatch(d)).ToArray();
 
             return result;
         }
