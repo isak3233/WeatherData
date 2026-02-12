@@ -123,5 +123,27 @@ namespace WeatherData
 
             return returnList;
         }
+
+        public static void Metrologicalautumn(string[] weatherData)
+        {
+            Regex regex = new Regex(@"^(\d{4}-\d{2}-\d{2}).*?,([\d.]+),");
+
+            //Tar ut tempraturen från våran data
+            var temps = weatherData
+                .Select(d => regex.Match(d))
+                .Where(m => m.Success)
+                .Select(m => (m.Groups[1].Value, m.Groups[2].Value))
+                .ToArray();
+
+
+
+            //decimal sum = 0;
+
+            //foreach (string temp in temps)
+            //{
+                
+            //}
+
+        }
     }
 }
