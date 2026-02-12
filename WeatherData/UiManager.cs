@@ -71,7 +71,26 @@ namespace WeatherData
             {
                 case 1:
                     var selectedDateForAverage = InputHelper.GetDateFromUser(6, 12);
-                    WeatherService.ShowAverageTempForDay(selectedDateForAverage, false);
+                    WeatherService.ShowAverageTempAndHumidForDay(selectedDateForAverage, false);
+                    break;
+                case 2:
+                    int selectedMonthForTemps = InputHelper.GetMonthFromUser(6, 12);
+                    WeatherService.ShowHotColdRanking(selectedMonthForTemps, false); 
+                    break;
+                case 3:
+                    int selectedMonthForHumidity = InputHelper.GetMonthFromUser(6, 12);
+                    WeatherService.ShowHumidityRanking(selectedMonthForHumidity, false);
+                    break;
+                case 4:
+                    int selectedMonthForMold = InputHelper.GetMonthFromUser(6, 12);
+                    WeatherService.ShowMoldRisk(selectedMonthForMold, false);
+                    break;
+                case 5:
+
+                    break;
+
+                case 6:
+
                     break;
                 case 7:
                     StartMainMenu();

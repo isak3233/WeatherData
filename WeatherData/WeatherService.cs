@@ -14,6 +14,14 @@ namespace WeatherData
             var averageTemp = WeatherDataCalculation.AverageTemp(weatherData);
             Console.WriteLine($"Medeltemperaturen den {date:yyyy-MM-dd} var {averageTemp:F2} °C");
         }
+
+        public static void ShowAverageTempAndHumidForDay(DateTime date, bool inhouse)
+        {
+            var weatherData = WeatherDataCollection.GetWeatherDataForDay(date, inhouse);
+            var averageTemp = WeatherDataCalculation.AverageTemp(weatherData);
+            var averageHumidity = WeatherDataCalculation.AverageHumidity(weatherData);
+            Console.WriteLine($"Medeltemperaturen den {date:yyyy-MM-dd} var {averageTemp:F2} °C och luftfuktigheten var {averageHumidity}");
+        }
         public static void ShowHotColdRanking(int month, bool inhouse)
         {
             var selectedDate = new DateTime(2016, month, 1);
