@@ -160,6 +160,10 @@ namespace WeatherData
             DateTime previousDate = DateTime.MinValue;
             int daysInRow = 0;
 
+            DateTime bestStart = DateTime.MinValue;
+            DateTime bestEnd = DateTime.MinValue;
+            int maxDays = 0;
+
             foreach (var (date, temp) in averageTempForDays)
             {
                 if (temp < 10)
@@ -167,25 +171,28 @@ namespace WeatherData
                     if (daysInRow == 0)
                     {
                         streakStart = date;
-                        daysInRow = 1;
                     }
-                    else if (date == previousDate.AddDays(1))
+                        
+
+                    if (previousDate != DateTime.MinValue && date == previousDate.AddDays(1))
                     {
                         daysInRow++;
                     }
                     else
                     {
-                        streakStart = date;
                         daysInRow = 1;
+                    }
+
+                    if (daysInRow > maxDays)
+                    {
+                        maxDays = daysInRow;
+                        bestStart = streakStart;
+                        bestEnd = date;
                     }
 
                     if (daysInRow >= 5)
                     {
-                        return new DateTime[]
-                        {
-                            streakStart,
-                            date
-                        };
+                        return new DateTime[] { bestStart, bestEnd };
                     }
                 }
                 else
@@ -196,7 +203,7 @@ namespace WeatherData
                 previousDate = date;
             }
 
-            return null;
+           return new DateTime[] { bestStart, bestEnd };
         }
     }
 }
