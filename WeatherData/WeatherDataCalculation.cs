@@ -139,10 +139,10 @@ namespace WeatherData
 
             //decimal sum = 0;
 
-            foreach (string temp in temps)
-            {
+            //foreach (string temp in temps)
+            //{
                 
-            }
+            //}
 
         }
     }
