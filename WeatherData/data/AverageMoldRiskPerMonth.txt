@@ -1,0 +1,7 @@
+juni: Medel mögel risken inomhus 2,46 risk, Medel mögel risken utomhus 11,51 risk
+juli: Medel mögel risken inomhus 7,17 risk, Medel mögel risken utomhus 9,31 risk
+augusti: Medel mögel risken inomhus 4,07 risk, Medel mögel risken utomhus 6,67 risk
+september: Medel mögel risken inomhus 5,97 risk, Medel mögel risken utomhus 10,67 risk
+oktober: Medel mögel risken inomhus 0,69 risk, Medel mögel risken utomhus 9,15 risk
+november: Medel mögel risken inomhus 0,04 risk, Medel mögel risken utomhus 15,01 risk
+december: Medel mögel risken inomhus 0,00 risk, Medel mögel risken utomhus 12,22 risk

@@ -6,11 +6,11 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace WeatherData
+namespace WeatherData.Weather
 {
     internal class WeatherDataCollection
     {
-        static public string[] GetWeatherDataForDay(DateTime date, bool inhouse)
+        static public async Task<string[]> GetWeatherDataForDay(DateTime date, bool inhouse)
         {
             string datePart = date.ToString("yyyy-MM-dd");
             string place = inhouse ? "Inne" : "Ute";
@@ -18,30 +18,30 @@ namespace WeatherData
             string rule = $@"{datePart}.*,{place},";
             Regex regex = new Regex(rule);
 
-            string[] weatherData = File.ReadAllLines("../../../data/WeatherData.txt");
+            string[] weatherData = await File.ReadAllLinesAsync("../../../data/WeatherData.txt");
             string[] result = weatherData.Where(d => regex.IsMatch(d)).ToArray();
 
             return result;
 
         }
-        static public string[] GetWeatherDataForMonth(DateTime date, bool inhouse)
+        static public async Task<string[]> GetWeatherDataForMonth(DateTime date, bool inhouse)
         {
             string datePart = date.ToString("yyyy-MM");
             string place = inhouse ? "Inne" : "Ute";
             string rule = $@"{datePart}.*,{place},";
             Regex regex = new Regex(rule);
 
-            string[] weatherData = File.ReadAllLines("../../../data/WeatherData.txt");
+            string[] weatherData = await File.ReadAllLinesAsync("../../../data/WeatherData.txt");
             string[] result = weatherData.Where(d => regex.IsMatch(d)).ToArray();
 
             return result;
         }
-        static public List<int> GetExistingDaysInMonth(DateTime date)
+        static public async Task<List<int>> GetExistingDaysInMonth(DateTime date)
         {
             string rule = $@"^\d{{4}}-{date:MM}-(\d{{2}})";
             Regex regex = new Regex(rule);
 
-            string[] weatherData = File.ReadAllLines("../../../data/WeatherData.txt");
+            string[] weatherData = await File.ReadAllLinesAsync("../../../data/WeatherData.txt");
 
             var result = weatherData
                 .Select(d => regex.Match(d))
@@ -63,14 +63,14 @@ namespace WeatherData
 
             return result;
         }
-        static public string[] GetAllWeatherData(bool inhouse)
+        static public async Task<string[]> GetAllWeatherData(bool inhouse)
         {
             string place = inhouse ? "Inne" : "Ute";
 
             string rule = $@".*{place}.*";
             Regex regex = new Regex(rule);
 
-            string[] weatherData = File.ReadAllLines("../../../data/WeatherData.txt");
+            string[] weatherData = await File.ReadAllLinesAsync("../../../data/WeatherData.txt");
             string[] result = weatherData.Where(d => regex.IsMatch(d)).ToArray();
 
             return result;

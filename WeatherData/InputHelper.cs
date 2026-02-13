@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeatherData.Weather;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace WeatherData
@@ -52,7 +53,7 @@ namespace WeatherData
                 }
             }
         }
-        static public DateTime GetDateFromUser(int startMonth, int endMonth)
+        static public async Task<DateTime> GetDateFromUser(int startMonth, int endMonth)
         {
             DateTime selectedDate = new DateTime(2016, startMonth, 1);
             int selectedMonth = GetMonthFromUser(startMonth, endMonth);
@@ -60,7 +61,7 @@ namespace WeatherData
 
             while(true)
             {
-                var days = WeatherDataCollection.GetExistingDaysInMonth(selectedDate);
+                var days = await WeatherDataCollection.GetExistingDaysInMonth(selectedDate);
                 Console.WriteLine("Dagar att välja mellan:");
                 foreach (int day in days)
                 {

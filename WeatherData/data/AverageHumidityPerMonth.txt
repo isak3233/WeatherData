@@ -1,0 +1,7 @@
+juni: Medel fuktigheten inomhus 28,76%, Medel fuktigheten utomhus 53,21%
+juli: Medel fuktigheten inomhus 41,63%, Medel fuktigheten utomhus 52,99%
+augusti: Medel fuktigheten inomhus 34,60%, Medel fuktigheten utomhus 48,60%
+september: Medel fuktigheten inomhus 41,60%, Medel fuktigheten utomhus 60,43%
+oktober: Medel fuktigheten inomhus 27,27%, Medel fuktigheten utomhus 64,58%
+november: Medel fuktigheten inomhus 19,07%, Medel fuktigheten utomhus 83,49%
+december: Medel fuktigheten inomhus 15,82%, Medel fuktigheten utomhus 77,93%

@@ -1,0 +1,7 @@
+juni: Medel tempraturen inomhus 24,70 °C, Medel tempraturen utomhus 15,85 °C
+juli: Medel tempraturen inomhus 26,28 °C, Medel tempraturen utomhus 20,24 °C
+augusti: Medel tempraturen inomhus 25,57 °C, Medel tempraturen utomhus 18,07 °C
+september: Medel tempraturen inomhus 23,31 °C, Medel tempraturen utomhus 16,16 °C
+oktober: Medel tempraturen inomhus 22,41 °C, Medel tempraturen utomhus 8,18 °C
+november: Medel tempraturen inomhus 22,78 °C, Medel tempraturen utomhus 3,31 °C
+december: Medel tempraturen inomhus 21,84 °C, Medel tempraturen utomhus 2,51 °C

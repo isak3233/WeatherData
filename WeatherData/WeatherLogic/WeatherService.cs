@@ -3,36 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
-namespace WeatherData
+namespace WeatherData.Weather
 {
     internal class WeatherService
     {
-        public static void ShowAverageTempForDay(DateTime date, bool inhouse)
+        public static async Task ShowAverageTempForDay(DateTime date, bool inhouse)
         {
-            var weatherData = WeatherDataCollection.GetWeatherDataForDay(date, inhouse);
+            var weatherData = await WeatherDataCollection.GetWeatherDataForDay(date, inhouse);
             var averageTemp = WeatherDataCalculation.AverageTemp(weatherData);
             Console.WriteLine($"Medeltemperaturen den {date:yyyy-MM-dd} var {averageTemp:F2} °C");
         }
 
-        public static void ShowAverageTempAndHumidForDay(DateTime date, bool inhouse)
+        public static async Task ShowAverageTempAndHumidForDay(DateTime date, bool inhouse)
         {
-            var weatherData = WeatherDataCollection.GetWeatherDataForDay(date, inhouse);
+            var weatherData = await WeatherDataCollection.GetWeatherDataForDay(date, inhouse);
             var averageTemp = WeatherDataCalculation.AverageTemp(weatherData);
             var averageHumidity = WeatherDataCalculation.AverageHumidity(weatherData);
             Console.WriteLine($"Medeltemperaturen den {date:yyyy-MM-dd} var {averageTemp:F2} °C och luftfuktigheten var {averageHumidity}");
         }
-        public static void ShowHotColdRanking(int month, bool inhouse)
+        public static async Task ShowHotColdRanking(int month, bool inhouse)
         {
             var selectedDate = new DateTime(2016, month, 1);
-            var days = WeatherDataCollection.GetExistingDaysInMonth(selectedDate);
+            var days = await WeatherDataCollection.GetExistingDaysInMonth(selectedDate);
             List<(string date, decimal temp)> allTempAverage = new List<(string, decimal)>();
 
             foreach (int day in days)
             {
                 selectedDate = new DateTime(2016, month, day);
                 var weatherData = WeatherDataCollection.GetWeatherDataForDay(selectedDate, inhouse);
-                var averageTemp = WeatherDataCalculation.AverageTemp(weatherData);
+                var averageTemp = WeatherDataCalculation.AverageTemp(await weatherData);
                 allTempAverage.Add((selectedDate.ToString("yyyy-MM-dd"), averageTemp));
             }
 
@@ -45,10 +46,10 @@ namespace WeatherData
             }
             Console.WriteLine("Kallaste");
         }
-        public static void ShowHumidityRanking(int month, bool inhouse)
+        public static async Task ShowHumidityRanking(int month, bool inhouse)
         {
             var selectedDate = new DateTime(2016, month, 1);
-            var days = WeatherDataCollection.GetExistingDaysInMonth(selectedDate);
+            var days = await WeatherDataCollection.GetExistingDaysInMonth(selectedDate);
 
             List<(string Date, decimal humidity)> allHumidityAverage = new List<(string, decimal)>();
 
@@ -56,7 +57,7 @@ namespace WeatherData
             {
                 selectedDate = new DateTime(2016, month, day);
                 var weatherData = WeatherDataCollection.GetWeatherDataForDay(selectedDate, inhouse);
-                var averageHumidity = WeatherDataCalculation.AverageHumidity(weatherData);
+                var averageHumidity = WeatherDataCalculation.AverageHumidity(await weatherData);
                 allHumidityAverage.Add((selectedDate.ToString("yyyy-MM-dd"), averageHumidity));
             }
 
@@ -69,10 +70,10 @@ namespace WeatherData
             }
             Console.WriteLine("Fuktigaste");
         }
-        public static void ShowMoldRisk(int month, bool inhouse) 
+        public static async Task ShowMoldRisk(int month, bool inhouse) 
         {
             var selectedDate = new DateTime(2016, month, 1);
-            var days = WeatherDataCollection.GetExistingDaysInMonth(selectedDate);
+            var days = await WeatherDataCollection.GetExistingDaysInMonth(selectedDate);
 
             List<(DateTime Date, decimal mold)> allMoldAverage = new List<(DateTime, decimal)>();
             foreach (int day in days)
@@ -80,7 +81,7 @@ namespace WeatherData
                 
                 selectedDate = new DateTime(2016, month, day);
                 var weatherData = WeatherDataCollection.GetWeatherDataForDay(selectedDate, inhouse);
-                var averageMoldRisk = WeatherDataCalculation.AverageMoldRisk(weatherData);
+                var averageMoldRisk = WeatherDataCalculation.AverageMoldRisk(await weatherData);
                 allMoldAverage.Add((selectedDate, averageMoldRisk));
             }
             var sortedAllMoldAverage = allMoldAverage.OrderByDescending(m => m.mold);
@@ -114,21 +115,52 @@ namespace WeatherData
             }
 
         }
-        public static void ShowMetrologicalAutumn()
+        public static async Task ShowMetrologicalAutumn()
         {
-            var weatherData = WeatherDataCollection.GetAllWeatherData(false);
+            var weatherData = await WeatherDataCollection.GetAllWeatherData(false);
             var averageTemps = WeatherDataCalculation.AverageTempForDays(weatherData);
-            var metrologicalDates = WeatherDataCalculation.Metrologicalautumn(averageTemps);
+            var metrologicalDates = WeatherDataCalculation.MetrologicalTime(averageTemps, 10);
 
             if ((metrologicalDates[1] - metrologicalDates[0]).Days + 1 < 5)
             {
-                Console.WriteLine("Hittade inte när den metrologiska höstens start!");
+                Console.WriteLine("Hittade inte när den metrologiska höstens startade!");
                 return;
             }
 
             string date1 = metrologicalDates[0].ToString("yyyy-MM-dd");
             string date2 = metrologicalDates[1].ToString("yyyy-MM-dd");
             Console.WriteLine($"Den metrologiska hösten startade efter datumna {date1} och {date2}");
+        }
+        public static async Task ShowMetrologicalWinter()
+        {
+            var weatherData = await WeatherDataCollection.GetAllWeatherData(false);
+            var averageTemps = WeatherDataCalculation.AverageTempForDays(weatherData);
+            var metrologicalDates = WeatherDataCalculation.MetrologicalTime(averageTemps, 0);
+
+            string date1 = metrologicalDates[0].ToString("yyyy-MM-dd");
+            string date2 = metrologicalDates[1].ToString("yyyy-MM-dd");
+
+            if ((metrologicalDates[1] - metrologicalDates[0]).Days + 1 < 5)
+            {
+                
+                Console.WriteLine("Hittade inte när den metrologiska vintern startade!");
+                Console.WriteLine($"Men va som närmast mellan datumna {date1} och {date2}");
+                return;
+            }
+
+            
+            Console.WriteLine($"Den metrologiska vintern startade efter datumna {date1} och {date2}");
+        }
+        public static async Task WriteDataToFiles()
+        { 
+           
+            WeatherDataWriter.WriteAverageHumidity();
+            WeatherDataWriter.WriteAverageMold();
+            WeatherDataWriter.WriteAverageTemp();
+            WeatherDataWriter.WriteFallAndWinter();
+
+
+
         }
     }
 }

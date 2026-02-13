@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace WeatherData
+namespace WeatherData.Weather
 {
     internal class WeatherDataCalculation
     {
@@ -32,7 +32,7 @@ namespace WeatherData
         }
         static public List<(DateTime day, decimal averageTemp)> AverageTempForDays(string[] weatherData)
         {
-            string rule = @"^(\d{4}-\d{2}-\d{2}).*?,([\d.]+),";
+            string rule = @"^(\d{4}-\d{2}-\d{2}).*?,(-?\d{1,2}\.\d{1}),";
             Regex regex = new Regex(rule);
 
             var result = weatherData
@@ -41,7 +41,7 @@ namespace WeatherData
                 .Select(m => new
                 {
                     Date = DateTime.Parse(m.Groups[1].Value),
-                    Temp = decimal.Parse(m.Groups[2].Value, CultureInfo.InvariantCulture)
+                    Temp = decimal.Parse(m.Groups[2].Value.Replace(".", ","))
                 })
                 .GroupBy(x => x.Date)
                 .Select(g => (
@@ -150,7 +150,7 @@ namespace WeatherData
             return returnList;
         }
 
-        public static DateTime[] Metrologicalautumn(List<(DateTime day, decimal averageTemp)> averageTempForDays)
+        public static DateTime[] MetrologicalTime(List<(DateTime day, decimal averageTemp)> averageTempForDays, int tempRequired)
         {
             Regex regex = new Regex(@"^(\d{4}-\d{2}-\d{2}).*?,([\d.]+),");
 
@@ -166,8 +166,9 @@ namespace WeatherData
 
             foreach (var (date, temp) in averageTempForDays)
             {
-                if (temp < 10)
+                if (temp < tempRequired)
                 {
+                    
                     if (daysInRow == 0)
                     {
                         streakStart = date;
