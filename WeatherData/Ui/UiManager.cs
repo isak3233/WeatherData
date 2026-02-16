@@ -35,7 +35,6 @@ namespace WeatherData.Ui
                         currentMenu = OutsideMenu;
                         break;
                     case Menus.InsideMenu:
-                        Console.WriteLine("yo1");
                         currentMenu = InsideMenu;
                         break;
                     default:

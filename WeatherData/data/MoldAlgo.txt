@@ -1,11 +1,5 @@
-
-
 risk = humidity procent - (100 - temprature)
-
 risk < -50 = 0 risk
-
 risk <= 0 then = (risk + 50) / 50 * 20
-
-risk < 30 and risk > 0 then = 20 + (risk / 30) * 80;
-
+risk < 30 and risk > 0 then = 20 + (risk / 30) * 80
 risk >= 30 = 100 risk

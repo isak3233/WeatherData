@@ -129,7 +129,7 @@ namespace WeatherData.Weather
 
             string date1 = metrologicalDates[0].ToString("yyyy-MM-dd");
             string date2 = metrologicalDates[1].ToString("yyyy-MM-dd");
-            Console.WriteLine($"Den metrologiska hösten startade efter datumna {date1} och {date2}");
+            Console.WriteLine($"Den metrologiska hösten startade efter datumen {date1} och {date2}");
         }
         public static async Task ShowMetrologicalWinter()
         {
@@ -149,7 +149,7 @@ namespace WeatherData.Weather
             }
 
             
-            Console.WriteLine($"Den metrologiska vintern startade efter datumna {date1} och {date2}");
+            Console.WriteLine($"Den metrologiska vintern startade efter datumen {date1} och {date2}");
         }
         public static async Task WriteDataToFiles()
         { 
@@ -158,7 +158,7 @@ namespace WeatherData.Weather
             WeatherDataWriter.WriteAverageMold();
             WeatherDataWriter.WriteAverageTemp();
             WeatherDataWriter.WriteFallAndWinter();
-
+            WeatherDataWriter.WriteOutMoldAlgo();
 
 
         }

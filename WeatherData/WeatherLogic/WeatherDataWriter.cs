@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,7 @@ namespace WeatherData.Weather
             }
             await File.WriteAllLinesAsync("../../../data/AverageTempPerMonth.txt", tempLines);
         }
+
         public static async Task WriteFallAndWinter()
         {
             var weatherDataOuthouse = WeatherDataCollection.GetAllWeatherData(false);
@@ -84,6 +86,23 @@ namespace WeatherData.Weather
             await File.WriteAllLinesAsync("../../../data/FallAndWinterTime.txt", linesToWrite);
 
 
+        }
+        public static async Task WriteOutMoldAlgo()
+        {
+            List<string> moldAlgo = new List<string>()
+            {
+                "risk = humidity procent - (100 - temprature)",
+
+                "risk < -50 = 0 risk",
+
+                "risk <= 0 then = (risk + 50) / 50 * 20",
+
+                "risk < 30 and risk > 0 then = 20 + (risk / 30) * 80",
+
+                "risk >= 30 = 100 risk"
+
+            };
+            await File.WriteAllLinesAsync("../../../data/MoldAlgo.txt", moldAlgo);
         }
     }
 }
